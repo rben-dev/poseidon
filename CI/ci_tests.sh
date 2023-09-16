@@ -41,12 +41,13 @@ done
 ## Non-x86 targets
 echo "\n\n\n=========== Switching to cross-compilation of C variants for non-x86 platforms\n\n\n"
 for c in arm-linux-gnueabi-gcc aarch64-linux-gnu-gcc sparc64-linux-gnu-gcc mips64-linux-gnuabi64-gcc mips64el-linux-gnuabi64-gcc riscv64-linux-gnu-gcc; do
+	arch=`echo -n $c | cut -d'-' -f1`
 	for iso_c in 0 1; do
-		echo "=========== Compiling with $c compiler ISO_C=$iso_c\n\n\n"
+		echo "=========== Compiling with $c compiler for architecture $arch and ISO_C=$iso_c\n\n\n"
 		make clean && ISO_C="$iso_c" CC=$c EXTRA_CFLAGS="-DPERF_MEASUREMENT=100" make
-		echo "\n\n\n=========== Testing compilation with $c compiler and ISO_C=$iso_c\n\n\n"
+		echo "\n\n\n=========== Testing compilation with $c compiler, architecture $arch and ISO_C=$iso_c\n\n\n"
 		make clean && ISO_C="$iso_c" CC=$c EXTRA_CFLAGS="-DPERF_MEASUREMENT=100 -static" make test
-		./test
+		qemu-$arch-static ./test
 	done
 done
 
