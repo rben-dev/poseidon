@@ -4,13 +4,11 @@ name: Poseidon CI
 on: push
 
 jobs:
-  deploy:
-    name: Deploy
+  tests:
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Build and test
