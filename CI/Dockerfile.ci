@@ -35,8 +35,9 @@ RUN apt-get update                                               && \
     rm -rf /var/lib/apt/lists/
 WORKDIR /build
 COPY ./ ./
-COPY ./CI/ci_tests.sh ./
+COPY ./CI ./sources/CI/
+COPY ./CI/ci_tests.sh ./sources/
 # NOTE: the random forces a Docker cache miss to force
 # the execution of the script
 ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
-RUN sh ci_tests.sh
+RUN cd sources && sh ci_tests.sh
