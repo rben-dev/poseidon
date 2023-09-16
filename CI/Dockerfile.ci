@@ -31,8 +31,9 @@ RUN apt-get update                                               && \
         picolibc-arm-none-eabi                                      \
         wine                                                        \
         clang                                                    && \
-    dpkg --add-architecture i386 && apt-get update               && \
-          apt-get install wine32:i386                            && \
+    dpkg --add-architecture i386                                 && \
+    apt-get update                                               && \
+    apt-get install -qy --no-install-recommends wine32:i386      && \
     apt-get clean                                                && \
     rm -rf /var/lib/apt/lists/
 WORKDIR /build
